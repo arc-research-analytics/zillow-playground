@@ -34,7 +34,7 @@ st.markdown(
 def data_loader():
 
     # super districts first
-    df_SD = pd.read_csv('Data/superDistrict_final.csv')
+    df_SD = pd.read_csv('superDistrict_final.csv')
 
     url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=NAME,GEOID&outSR=4326&f=json"
 
@@ -45,7 +45,7 @@ def data_loader():
 
 
     # counties next
-    df_county = pd.read_csv('Data/county_final.csv')
+    df_county = pd.read_csv('county_final.csv')
 
     url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
 
