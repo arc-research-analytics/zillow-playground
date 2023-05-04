@@ -61,13 +61,23 @@ def data_loader():
 # define mapping function for super districts first
 def superDistrict_mapper():
 
-    # # get URL from Open Data Portal
-    # url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=NAME,GEOID&outSR=4326&f=json"
-
-    # # define geodataframe
-    # gdf_SD = gpd.read_file(url)
 
     gdf = data_loader()[0]
+
+    color_labels = [
+        (254, 217, 118), # light yellow
+        (253, 141, 60), # light orange
+        (252, 78, 42), # orange
+        (227, 26, 28) # red
+    ]
+
+    gdf['choro_color'] = pd.cut(
+            gdf['Value_median'],
+            bins=4,
+            labels=color_labels,
+            include_lowest=True,
+            duplicates='drop'
+            )
 
     initial_view_state = pdk.ViewState(
         latitude=33.76427201010466, 
@@ -85,12 +95,12 @@ def superDistrict_mapper():
         gdf,
         pickable=True,
         autoHighlight=True,
-        highlight_color = [211,211,211,99],
-        opacity=0.5,
+        highlight_color = [128, 128, 128],
+        opacity=0.7,
         stroked=True,
         filled=True,
-        get_fill_color=[176,224,230],
-        get_line_color=[0, 0, 0, 255],
+        get_fill_color='choro_color',
+        get_line_color=[128, 128, 128],
         line_width_min_pixels=1
     )
 
@@ -106,11 +116,6 @@ def superDistrict_mapper():
 
 def county_mapper():
 
-    # # get URL from Open Data Portal
-    # url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
-
-    # # define geodataframe
-    # gdf = gpd.read_file(url)
 
     gdf = data_loader()[1]
 
@@ -130,7 +135,7 @@ def county_mapper():
         gdf,
         pickable=True,
         autoHighlight=True,
-        highlight_color = [211,211,211,99],
+        highlight_color = [128, 128, 128],
         opacity=0.5,
         stroked=True,
         filled=True,
