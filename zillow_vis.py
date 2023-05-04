@@ -122,7 +122,7 @@ geography = st.radio(
     ('County', 'Super district'),
     index=1)
 
-st.markdown("***Data provided via the Zestimate API***")
+st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation***")
 
 # show map
 if geography == 'Super district':
