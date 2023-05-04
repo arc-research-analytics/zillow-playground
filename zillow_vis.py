@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 import plotly.express as px
-import conda
+# import conda
 import os
 
 conda_file_dir = conda.__file__
