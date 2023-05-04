@@ -25,6 +25,7 @@ st.markdown(
     div.block-container{padding-top:1.5rem;}
     div.css-k6gyv0.e10z71040{visibility: hidden;}
     div.css-1wbqy5l.e10z71041{visibility: hidden;}
+    div.css-1ijdgky.edgvbvh3{visibility: hidden;}
 </style>
 """,
     unsafe_allow_html=True,
