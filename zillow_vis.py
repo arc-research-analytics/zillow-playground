@@ -79,7 +79,7 @@ geography = st.radio(
     ('County', 'Super district'),
     index=1)
 
-st.write("Data provided via the Zestimate API")
+st.markdown("***Data provided via the Zestimate API***")
 
 # show map
 st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
