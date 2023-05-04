@@ -53,11 +53,54 @@ def superDistrict_mapper():
         gdf,
         pickable=True,
         autoHighlight=True,
-        highlight_color = [255, 255, 255, 80],
+        highlight_color = [211,211,211,99],
         opacity=0.5,
         stroked=True,
         filled=True,
-        # get_fill_color='choro_color',
+        get_fill_color=[176,224,230],
+        get_line_color=[0, 0, 0, 255],
+        line_width_min_pixels=1
+    )
+
+    r = pdk.Deck(
+        layers=geojson,
+        initial_view_state=initial_view_state,
+        map_provider='mapbox',
+        map_style='light',
+        # tooltip=tooltip
+        )
+
+    return r
+
+def county_mapper():
+
+    # get URL from Open Data Portal
+    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
+
+    # define geodataframe
+    gdf = gpd.read_file(url)
+
+    initial_view_state = pdk.ViewState(
+        latitude=33.76427201010466, 
+        longitude=-84.37283460679215,
+        zoom=8, 
+        max_zoom=12, 
+        min_zoom=8,
+        pitch=0,
+        bearing=0,
+        height=590
+    )
+
+    geojson = pdk.Layer(
+        "GeoJsonLayer",
+        gdf,
+        pickable=True,
+        autoHighlight=True,
+        highlight_color = [211,211,211,99],
+        opacity=0.5,
+        stroked=True,
+        filled=True,
+        get_fill_color=[50,205,50],
         get_line_color=[0, 0, 0, 255],
         line_width_min_pixels=1
     )
@@ -82,7 +125,10 @@ geography = st.radio(
 st.markdown("***Data provided via the Zestimate API***")
 
 # show map
-st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
+if geography == 'Super district':
+    st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
+else:
+    st.pydeck_chart(county_mapper(), use_container_width=True)
 
 image = Image.open('zillow_logo.png')
 
