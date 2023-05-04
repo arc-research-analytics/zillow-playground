@@ -38,9 +38,9 @@ def superDistrict_mapper():
     gdf = gpd.read_file(url)
 
     initial_view_state = pdk.ViewState(
-        latitude=34.207054643497315,
-        longitude=-84.10535919531371, 
-        zoom=9.9, 
+        latitude=33.76427201010466, 
+        longitude=-84.37283460679215,
+        zoom=8, 
         max_zoom=12, 
         min_zoom=8,
         pitch=0,
