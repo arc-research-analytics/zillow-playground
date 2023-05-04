@@ -130,10 +130,11 @@ if geography == 'Super district':
 else:
     st.pydeck_chart(county_mapper(), use_container_width=True)
 
-image = Image.open('zillow_logo.png')
-
 
 st.write("Data collected from May 1, 2023 to May 4, 2024.")
+
+image = Image.open('zillow_logo.png')
+st.image(image, width=75)
 
 
 
