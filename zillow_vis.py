@@ -64,6 +64,9 @@ def superDistrict_mapper():
 
     gdf = data_loader()[0]
 
+    # do county outline
+    county_outline = data_loader()[1]
+
     color_labels = [
         (254, 217, 118), # light yellow
         (253, 141, 60), # light orange
@@ -95,8 +98,8 @@ def superDistrict_mapper():
         gdf,
         pickable=True,
         autoHighlight=True,
-        highlight_color = [128, 128, 128],
-        opacity=0.7,
+        highlight_color = [128, 128, 128, 70],
+        opacity=0.5,
         stroked=True,
         filled=True,
         get_fill_color='choro_color',
@@ -104,8 +107,20 @@ def superDistrict_mapper():
         line_width_min_pixels=1
     )
 
+    geojson2 = pdk.Layer(
+        "GeoJsonLayer",
+        county_outline,
+        pickable=False,
+        autoHighlight=False,
+        opacity=.7,
+        stroked=True,
+        filled=False,
+        get_line_color=[0, 0, 0],
+        line_width_min_pixels=3
+    )
+
     r = pdk.Deck(
-        layers=geojson,
+        layers=[geojson, geojson2],
         initial_view_state=initial_view_state,
         map_provider='mapbox',
         map_style='light',
