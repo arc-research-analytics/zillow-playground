@@ -29,14 +29,45 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# data loadewr
+@st.cache_data
+def data_loader():
+
+    # super districts first
+    df_SD = pd.read_csv('Data/superDistrict_final.csv')
+
+    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=NAME,GEOID&outSR=4326&f=json"
+
+    gdf_SD = gpd.read_file(url)
+
+    gdf_SD = gdf_SD.merge(df_SD, left_on='NAME', right_on='Super_district')
+
+
+
+    # counties next
+    df_county = pd.read_csv('Data/county_final.csv')
+
+    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
+
+    gdf_county = gpd.read_file(url)
+
+    gdf_county = gdf_county.merge(df_county, left_on='NAME', right_on='County')
+
+    return gdf_SD, gdf_county
+
+
+
+
 # define mapping function for super districts first
 def superDistrict_mapper():
 
-    # get URL from Open Data Portal
-    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=NAME,GEOID&outSR=4326&f=json"
+    # # get URL from Open Data Portal
+    # url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=NAME,GEOID&outSR=4326&f=json"
 
-    # define geodataframe
-    gdf = gpd.read_file(url)
+    # # define geodataframe
+    # gdf_SD = gpd.read_file(url)
+
+    gdf = data_loader()[0]
 
     initial_view_state = pdk.ViewState(
         latitude=33.76427201010466, 
@@ -75,11 +106,13 @@ def superDistrict_mapper():
 
 def county_mapper():
 
-    # get URL from Open Data Portal
-    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
+    # # get URL from Open Data Portal
+    # url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
 
-    # define geodataframe
-    gdf = gpd.read_file(url)
+    # # define geodataframe
+    # gdf = gpd.read_file(url)
+
+    gdf = data_loader()[1]
 
     initial_view_state = pdk.ViewState(
         latitude=33.76427201010466, 
