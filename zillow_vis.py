@@ -36,11 +36,10 @@ geography = st.radio(
     ('County', 'Super district'),
     index=1)
 
+st.write("Data provided via the Zestimate API")
 
 
-
-
-# title
+st.write("Data collected from May 1, 2023 to May 4, 2024.")
 
 
 
