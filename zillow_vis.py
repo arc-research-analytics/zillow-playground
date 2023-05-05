@@ -177,7 +177,7 @@ geography = st.radio(
     index=1,
     horizontal=True)
 
-st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation***")
+
 
 # show map
 if geography == 'Super district':
@@ -185,7 +185,7 @@ if geography == 'Super district':
 else:
     st.pydeck_chart(county_mapper(), use_container_width=True)
 
-
+st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation***")
 st.write("Data collected from May 1, 2023 to May 4, 2024.")
 
 image = Image.open('zillow_logo.png')
