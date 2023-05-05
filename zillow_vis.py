@@ -145,7 +145,7 @@ def superDistrict_mapper():
     # define tooltip
     tooltip = {
             "html": "Super District: <b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
-            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"12px"},
+            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
     geojson2 = pdk.Layer(
@@ -181,6 +181,22 @@ def county_mapper():
         '30-Day Change':gdf['change_median']
     }
 
+    tooltip_label = {
+        'Current Median Home Value':'Median Zestimate: ',
+        '30-Day Change':'Median 30-Day Zestimate Change: ',
+        }
+    
+    gdf['zestimate_formatted'] = gdf['zestimate_median'].apply(lambda x: "${:,.0f}".format((x)))
+    gdf['change_formatted'] = gdf['change_median'].apply(lambda x: "{:.1f}%".format((x)))
+
+    tooltip_value = {
+        'Current Median Home Value':gdf['zestimate_formatted'],
+        '30-Day Change':gdf['change_formatted'] ,
+        }
+    
+    gdf['tooltip_label'] = tooltip_label[variable]
+    gdf['tooltip_value'] = tooltip_value[variable]
+
     gdf['choro_color'] = pd.cut(
             var_dict[variable],
             bins=len(color_labels),
@@ -214,12 +230,18 @@ def county_mapper():
         line_width_min_pixels=2
     )
 
+    # define tooltip
+    tooltip = {
+            "html": "County: <b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
+            }
+
     r = pdk.Deck(
         layers=geojson,
         initial_view_state=initial_view_state,
         map_provider='mapbox',
         map_style='light',
-        # tooltip=tooltip
+        tooltip=tooltip
         )
 
     return r
