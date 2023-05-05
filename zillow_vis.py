@@ -213,13 +213,11 @@ variable = col2.radio(
     horizontal=True)
 
 
-
-
 # show map
 if geography == 'Super District':
-    st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
+    col1.pydeck_chart(superDistrict_mapper(), use_container_width=True)
 else:
-    st.pydeck_chart(county_mapper(), use_container_width=True)
+    col1.pydeck_chart(county_mapper(), use_container_width=True)
 
 st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation from 5/1/23 to 5/4/23.***")
 # st.write("Data collected from May 1, 2023 to May 4, 2024.")
