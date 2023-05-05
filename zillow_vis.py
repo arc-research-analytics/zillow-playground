@@ -100,7 +100,7 @@ def superDistrict_mapper():
     initial_view_state = pdk.ViewState(
         latitude=33.8083684586515, 
         longitude=-84.37172482302101, 
-        zoom=7.8, 
+        zoom=7.5, 
         max_zoom=12, 
         min_zoom=8,
         pitch=0,
@@ -165,7 +165,7 @@ def county_mapper():
     initial_view_state = pdk.ViewState(
         latitude=33.8083684586515, 
         longitude=-84.37172482302101, 
-        zoom=7.8, 
+        zoom=7.5, 
         max_zoom=12, 
         min_zoom=8,
         pitch=0,
