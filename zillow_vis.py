@@ -37,6 +37,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
+
 # define color ramp
 color_labels = [
         (254, 217, 118), # light yellow
@@ -50,20 +52,6 @@ color_labels = [
 latitude = 33.8083684586515
 longitude = -84.37172482302101
 zoom = 7.5
-
-col1, col2 = st.columns([1,1])
-
-# create dropdown for summary level
-geography = col1.selectbox(
-    'Select geography to summarize:',
-    ('Super District', 'County'),
-    index=0
-)
-
-variable = col2.selectbox(
-    'Select variable:',
-    ('Current Median Home Value', '30-Day Change'),
-    index=1)
 
 # data loadewr
 @st.cache_data
@@ -90,6 +78,7 @@ def data_loader():
     gdf_county = gdf_county.merge(df_county, left_on='NAME', right_on='County')
 
     return gdf_SD, gdf_county
+
 
 # define mapping function for super districts first
 def superDistrict_mapper():
@@ -280,7 +269,7 @@ def superDistrict_charter():
                  hover_data=['change_median'],
                 #  custom_data=['NAME', var_dict[variable]],
                  color_discrete_sequence=["rgb(177, 0, 38)", "rgb(227, 26, 28)", "rgb(252, 78, 42)", "rgb(253, 141, 60)", "rgb(254, 217, 118)"],
-                 title='Top 20 Super Districts',
+                 title='Top Super Districts',
                  height=600,
                  labels={
                     'change_median':'Median 30-Day Change (%)',
@@ -311,8 +300,28 @@ def superDistrict_charter():
     return fig
 
 
+
+col1, col2 = st.columns([1,1])
+
+# create dropdown for summary level
+geography = col1.selectbox(
+    'Select geography to summarize:',
+    ('Super District', 'County'),
+    index=0
+)
+
+variable = col2.selectbox(
+    'Select variable:',
+    ('Current Median Home Value', '30-Day Change'),
+    index=1)
+
+
+
+
+
 # show map
 if geography == 'Super District':
+
     col1.pydeck_chart(superDistrict_mapper(), use_container_width=True)
     col2.plotly_chart(superDistrict_charter(), use_container_width=True)
 else:
