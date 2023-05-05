@@ -51,6 +51,20 @@ latitude = 33.8083684586515
 longitude = -84.37172482302101
 zoom = 7.6
 
+col1, col2 = st.columns([1,1])
+
+# create dropdown for summary level
+geography = col1.selectbox(
+    'Select geography to summarize:',
+    ('Super District', 'County'),
+    index=0
+)
+
+variable = col2.selectbox(
+    'Select variable:',
+    ('Current Median Home Value', '30-Day Change'),
+    index=1)
+
 # data loadewr
 @st.cache_data
 def data_loader():
@@ -295,20 +309,6 @@ def superDistrict_charter():
     )
 
     return fig
-
-
-col1, col2 = st.columns([1,1])
-# create dropdown for summary level
-geography = col1.selectbox(
-    'Select geography to summarize:',
-    ('Super District', 'County'),
-    index=0
-)
-
-variable = col2.selectbox(
-    'Select variable:',
-    ('Current Median Home Value', '30-Day Change'),
-    index=1)
 
 
 # show map
