@@ -167,6 +167,7 @@ def superDistrict_mapper():
 
     return r
 
+# define mapping function for counties next
 def county_mapper():
 
 
@@ -220,21 +221,69 @@ def county_mapper():
 
     return r
 
+# define function for drawing bar chart
 def superDistrict_charter():
 
     gdf = data_loader()[0]
 
     df = gdf.drop(['geometry'], axis=1)
 
-
     var_dict = {
-        'Current Median Home Value':gdf['zestimate_median'],
-        '30-Day Change':gdf['change_median']
+        'Current Median Home Value':'zestimate_median',
+        '30-Day Change':'change_median'
     }
 
-    # fig = px.bar(df, x="total_bill", y="day", orientation='h')
+    if geography == 'Super District':
+        df = df.sort_values(by=var_dict[variable], ascending=False).head(15)
 
-    return df
+    var_dict2 = {
+            'Current Median Home Value':df['zestimate_median'],
+            '30-Day Change':df['change_median']
+        }
+    
+    color_labels2 = [
+        'fifth group', 
+        'fourth group', 
+        'third group', 
+        'second group', 
+        'first group'
+    ]
+
+    df['color_group'] = pd.cut(
+            var_dict2[variable],
+            bins=len(color_labels2),
+            labels=color_labels2,
+            include_lowest=True,
+            duplicates='drop'
+            )
+
+    fig = px.bar(df, 
+                 x=var_dict[variable], 
+                 y="NAME", 
+                 orientation='h',
+                 color='color_group',
+                 hover_name='NAME',
+                 color_discrete_sequence=["rgb(177, 0, 38)", "rgb(227, 26, 28)", "rgb(252, 78, 42)", "rgb(253, 141, 60)", "rgb(254, 217, 118)"],
+                 title="Top Super Districts",
+                 height=600,
+                 labels={
+                    'change_median':'Median 30-Day Change (%)',
+                    'zestimate_median':'Median Zestimate'
+                 })
+       
+
+    fig.update_layout(
+        bargap=0.75,
+        yaxis = dict(
+                autorange='reversed',
+                title = None,
+                tickfont_color = '#022B3A',
+                tickfont_size = 14,
+                showgrid = False
+                )
+    )
+
+    return fig
 
 
 col1, col2 = st.columns([1,1])
@@ -254,7 +303,7 @@ variable = col2.selectbox(
 # show map
 if geography == 'Super District':
     col1.pydeck_chart(superDistrict_mapper(), use_container_width=True)
-    col2.dataframe(superDistrict_charter(), use_container_width=True)
+    col2.plotly_chart(superDistrict_charter(), use_container_width=True)
 else:
     col1.pydeck_chart(county_mapper(), use_container_width=True)
 
