@@ -191,7 +191,7 @@ variable = col2.radio(
 
 
 # show map
-if geography == 'Super district':
+if geography == 'Super District':
     st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
 else:
     st.pydeck_chart(county_mapper(), use_container_width=True)
