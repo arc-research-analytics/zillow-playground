@@ -46,6 +46,11 @@ color_labels = [
         (177, 0, 38) # dark red
     ]
 
+# define map starting point
+latitude = 33.8083684586515
+longitude = -84.37172482302101
+zoom = 7.3 
+
 # data loadewr
 @st.cache_data
 def data_loader():
@@ -98,9 +103,9 @@ def superDistrict_mapper():
             )
 
     initial_view_state = pdk.ViewState(
-        latitude=33.8083684586515, 
-        longitude=-84.37172482302101, 
-        zoom=7.2, 
+        latitude=latitude, 
+        longitude=longitude, 
+        zoom=zoom, 
         max_zoom=12, 
         min_zoom=8,
         pitch=0,
@@ -163,9 +168,9 @@ def county_mapper():
             )
 
     initial_view_state = pdk.ViewState(
-        latitude=33.8083684586515, 
-        longitude=-84.37172482302101, 
-        zoom=7.2, 
+        latitude=latitude, 
+        longitude=longitude, 
+        zoom=zoom, 
         max_zoom=12, 
         min_zoom=8,
         pitch=0,
