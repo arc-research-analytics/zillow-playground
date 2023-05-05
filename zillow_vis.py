@@ -174,11 +174,18 @@ def county_mapper():
     return r
 
 
+col1, col2 = st.columns([1,1])
 # create dropdown for summary level
-geography = st.radio(
+geography = col1.radio(
     'Select geography to summarize:',
     ('County', 'Super district'),
     index=1,
+    horizontal=True)
+
+variable = col2.radio(
+    'Select variable:',
+    ('Zestimate Value', 'Zestimate 30-Day Change'),
+    index=0,
     horizontal=True)
 
 
