@@ -203,7 +203,8 @@ col1, col2 = st.columns([1,1])
 geography = col1.selectbox(
     'Select geography to summarize:',
     ('Super District', 'County'),
-    index=0)
+    index=0
+)
 
 variable = col2.selectbox(
     'Select variable:',
