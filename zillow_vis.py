@@ -75,7 +75,8 @@ def superDistrict_mapper():
         (254, 217, 118), # light yellow
         (253, 141, 60), # light orange
         (252, 78, 42), # orange
-        (227, 26, 28) # red
+        (227, 26, 28), # red
+        (177, 0, 38) # dark red
     ]
 
     gdf['choro_color'] = pd.cut(
@@ -178,16 +179,15 @@ col1, col2 = st.columns([1,1])
 # create dropdown for summary level
 geography = col1.radio(
     'Select geography to summarize:',
-    ('County', 'Super district'),
-    index=1,
+    ('Super district', 'County'),
+    index=0,
     horizontal=True)
 
 variable = col2.radio(
     'Select variable:',
-    ('Zestimate Value', 'Zestimate 30-Day Change'),
-    index=0,
+    ('May 2023 Zestimate', '30-Day Change'),
+    index=1,
     horizontal=True)
-
 
 
 # show map
@@ -196,8 +196,8 @@ if geography == 'Super district':
 else:
     st.pydeck_chart(county_mapper(), use_container_width=True)
 
-st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation***")
-st.write("Data collected from May 1, 2023 to May 4, 2024.")
+st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation from 5/1/23 to 5/4/23.***")
+# st.write("Data collected from May 1, 2023 to May 4, 2024.")
 
 image = Image.open('zillow_logo.png')
 st.image(image, width=75)
