@@ -49,8 +49,8 @@ color_labels = [
     ]
 
 # define map starting point
-latitude = 33.8083684586515
-longitude = -84.37172482302101
+latitude = 33.836717766945384
+longitude = -84.37286813567411
 zoom = 7.2
 height = 525
 
