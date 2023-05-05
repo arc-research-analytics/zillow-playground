@@ -49,7 +49,7 @@ color_labels = [
 # define map starting point
 latitude = 33.8083684586515
 longitude = -84.37172482302101
-zoom = 7.6
+zoom = 7.2
 
 col1, col2 = st.columns([1,1])
 
