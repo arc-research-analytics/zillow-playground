@@ -280,7 +280,8 @@ def superDistrict_charter():
                 tickfont_color = '#022B3A',
                 tickfont_size = 14,
                 showgrid = False
-                )
+                ),
+        showlegend=False
     )
 
     return fig
