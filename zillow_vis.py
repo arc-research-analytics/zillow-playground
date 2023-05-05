@@ -76,7 +76,7 @@ def superDistrict_mapper():
 
     gdf['choro_color'] = pd.cut(
             gdf['Value_median'],
-            bins=4,
+            bins=len(color_labels),
             labels=color_labels,
             include_lowest=True,
             duplicates='drop'
@@ -174,7 +174,8 @@ def county_mapper():
 geography = st.radio(
     'Select geography to summarize:',
     ('County', 'Super district'),
-    index=1)
+    index=1,
+    horizontal=True)
 
 st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation***")
 
