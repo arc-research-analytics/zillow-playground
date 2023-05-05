@@ -77,12 +77,8 @@ def data_loader():
 
     return gdf_SD, gdf_county
 
-
-
-
 # define mapping function for super districts first
 def superDistrict_mapper():
-
 
     gdf = data_loader()[0]
 
@@ -93,6 +89,22 @@ def superDistrict_mapper():
         'Current Median Home Value':gdf['zestimate_median'],
         '30-Day Change':gdf['change_median']
     }
+
+    tooltip_label = {
+        'Current Median Home Value':'Median Zestimate: ',
+        '30-Day Change':'Median 30-Day Zestimate Change: ',
+        }
+    
+    gdf['zestimate_formatted'] = gdf['zestimate_median'].apply(lambda x: "${:,.0f}".format((x)))
+    gdf['change_formatted'] = gdf['change_median'].apply(lambda x: "{:.1f}%".format((x)))
+
+    tooltip_value = {
+        'Current Median Home Value':gdf['zestimate_formatted'],
+        '30-Day Change':gdf['change_formatted'] ,
+        }
+    
+    gdf['tooltip_label'] = tooltip_label[variable]
+    gdf['tooltip_value'] = tooltip_value[variable]
 
     gdf['choro_color'] = pd.cut(
             var_dict[variable],
@@ -127,6 +139,12 @@ def superDistrict_mapper():
         line_width_min_pixels=1
     )
 
+    # define tooltip
+    tooltip = {
+            "html": "Super District: <b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica"},
+            }
+
     geojson2 = pdk.Layer(
         "GeoJsonLayer",
         county_outline,
@@ -144,7 +162,7 @@ def superDistrict_mapper():
         initial_view_state=initial_view_state,
         map_provider='mapbox',
         map_style='light',
-        # tooltip=tooltip
+        tooltip=tooltip
         )
 
     return r
@@ -202,6 +220,22 @@ def county_mapper():
 
     return r
 
+def superDistrict_charter():
+
+    gdf = data_loader()[0]
+
+    df = gdf.drop(['geometry'], axis=1)
+
+
+    var_dict = {
+        'Current Median Home Value':gdf['zestimate_median'],
+        '30-Day Change':gdf['change_median']
+    }
+
+    # fig = px.bar(df, x="total_bill", y="day", orientation='h')
+
+    return df
+
 
 col1, col2 = st.columns([1,1])
 # create dropdown for summary level
@@ -220,6 +254,7 @@ variable = col2.selectbox(
 # show map
 if geography == 'Super District':
     col1.pydeck_chart(superDistrict_mapper(), use_container_width=True)
+    col2.dataframe(superDistrict_charter(), use_container_width=True)
 else:
     col1.pydeck_chart(county_mapper(), use_container_width=True)
 
