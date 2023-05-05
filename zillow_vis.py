@@ -322,10 +322,10 @@ variable = col2.selectbox(
 # show map
 if geography == 'Super District':
 
-    col1.pydeck_chart(superDistrict_mapper(), use_container_width=True)
-    col2.plotly_chart(superDistrict_charter(), use_container_width=True)
+    st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
+    # col2.plotly_chart(superDistrict_charter(), use_container_width=True)
 else:
-    col1.pydeck_chart(county_mapper(), use_container_width=True)
+    st.pydeck_chart(county_mapper(), use_container_width=True)
 
 st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation from 5/1/23 to 5/4/23.***")
 # st.write("Data collected from May 1, 2023 to May 4, 2024.")
