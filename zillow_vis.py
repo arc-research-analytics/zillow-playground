@@ -280,7 +280,6 @@ def superDistrict_charter():
                  hover_data=['change_median'],
                 #  custom_data=['NAME', var_dict[variable]],
                  color_discrete_sequence=["rgb(177, 0, 38)", "rgb(227, 26, 28)", "rgb(252, 78, 42)", "rgb(253, 141, 60)", "rgb(254, 217, 118)"],
-                 title="Top Super Districts",
                  height=600,
                  labels={
                     'change_median':'Median 30-Day Change (%)',
@@ -289,6 +288,7 @@ def superDistrict_charter():
        
 
     fig.update_layout(
+        margin=dict(l=20, r=20, t=20, b=20),
         bargap=0.55,
         yaxis = dict(
                 autorange='reversed',
@@ -296,7 +296,6 @@ def superDistrict_charter():
                 tickfont_color = '#022B3A',
                 tickfont_size = 14,
                 showgrid = False,
-                mirror=True,
                 ticks='outside',
                 showline=True,
                 ),
