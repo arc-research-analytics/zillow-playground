@@ -233,9 +233,6 @@ def superDistrict_charter():
         '30-Day Change':'change_median'
     }
 
-    if geography == 'Super District':
-        df = df.sort_values(by=var_dict[variable], ascending=False).head(15)
-
     var_dict2 = {
             'Current Median Home Value':df['zestimate_median'],
             '30-Day Change':df['change_median']
@@ -256,6 +253,9 @@ def superDistrict_charter():
             include_lowest=True,
             duplicates='drop'
             )
+    
+    if geography == 'Super District':
+        df = df.sort_values(by=var_dict[variable], ascending=False).head(20)
 
     fig = px.bar(df, 
                  x=var_dict[variable], 
@@ -263,6 +263,8 @@ def superDistrict_charter():
                  orientation='h',
                  color='color_group',
                  hover_name='NAME',
+                 hover_data=['change_median'],
+                #  custom_data=['NAME', var_dict[variable]],
                  color_discrete_sequence=["rgb(177, 0, 38)", "rgb(227, 26, 28)", "rgb(252, 78, 42)", "rgb(253, 141, 60)", "rgb(254, 217, 118)"],
                  title="Top Super Districts",
                  height=600,
@@ -273,15 +275,23 @@ def superDistrict_charter():
        
 
     fig.update_layout(
-        bargap=0.75,
+        bargap=0.55,
         yaxis = dict(
                 autorange='reversed',
                 title = None,
                 tickfont_color = '#022B3A',
                 tickfont_size = 14,
-                showgrid = False
+                showgrid = False,
+                mirror=True,
+                ticks='outside',
+                showline=True,
                 ),
-        showlegend=False
+        xaxis = dict(
+            ticks='outside',
+            tickformat = ".2",
+            showline=True
+        ),
+        showlegend=False,
     )
 
     return fig
