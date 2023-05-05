@@ -52,6 +52,7 @@ color_labels = [
 latitude = 33.8083684586515
 longitude = -84.37172482302101
 zoom = 7.2
+height = 525
 
 # data loadewr
 @st.cache_data
@@ -125,7 +126,7 @@ def superDistrict_mapper():
         min_zoom=8,
         pitch=0,
         bearing=0,
-        height=550
+        height=height
     )
 
     geojson = pdk.Layer(
