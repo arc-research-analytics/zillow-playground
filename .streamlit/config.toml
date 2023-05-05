@@ -1,5 +1,3 @@
-CACHE_ON_STARTUP = True
-
 [theme]
 # Primary accent color for interactive elements.
 primaryColor = "#b10026"
