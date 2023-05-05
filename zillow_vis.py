@@ -37,6 +37,15 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# define color ramp
+color_labels = [
+        (254, 217, 118), # light yellow
+        (253, 141, 60), # light orange
+        (252, 78, 42), # orange
+        (227, 26, 28), # red
+        (177, 0, 38) # dark red
+    ]
+
 # data loadewr
 @st.cache_data
 def data_loader():
@@ -74,14 +83,6 @@ def superDistrict_mapper():
 
     # do county outline
     county_outline = data_loader()[1]
-
-    color_labels = [
-        (254, 217, 118), # light yellow
-        (253, 141, 60), # light orange
-        (252, 78, 42), # orange
-        (227, 26, 28), # red
-        (177, 0, 38) # dark red
-    ]
 
     var_dict = {
         'Current Median Home Value':gdf['zestimate_median'],
@@ -148,6 +149,19 @@ def county_mapper():
 
     gdf = data_loader()[1]
 
+    var_dict = {
+        'Current Median Home Value':gdf['zestimate_median'],
+        '30-Day Change':gdf['change_median']
+    }
+
+    gdf['choro_color'] = pd.cut(
+            var_dict[variable],
+            bins=len(color_labels),
+            labels=color_labels,
+            include_lowest=True,
+            duplicates='drop'
+            )
+
     initial_view_state = pdk.ViewState(
         latitude=33.8083684586515, 
         longitude=-84.37172482302101, 
@@ -164,13 +178,13 @@ def county_mapper():
         gdf,
         pickable=True,
         autoHighlight=True,
-        highlight_color = [128, 128, 128],
+        highlight_color = [128, 128, 128, 70],
         opacity=0.5,
         stroked=True,
         filled=True,
-        get_fill_color=[50,205,50],
-        get_line_color=[0, 0, 0, 255],
-        line_width_min_pixels=1
+        get_fill_color='choro_color',
+        get_line_color=[0, 0, 0],
+        line_width_min_pixels=2
     )
 
     r = pdk.Deck(
