@@ -289,7 +289,7 @@ def superDistrict_charter():
        
 
     fig.update_layout(
-        margin=dict(l=20, r=20, t=20, b=20),
+        margin=dict(l=20, r=20, t=22, b=20),
         bargap=0.55,
         yaxis = dict(
                 autorange='reversed',
