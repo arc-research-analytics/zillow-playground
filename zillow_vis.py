@@ -179,13 +179,13 @@ col1, col2 = st.columns([1,1])
 # create dropdown for summary level
 geography = col1.radio(
     'Select geography to summarize:',
-    ('Super district', 'County'),
+    ('Super District', 'County'),
     index=0,
     horizontal=True)
 
 variable = col2.radio(
     'Select variable:',
-    ('May 2023 Zestimate', '30-Day Change'),
+    ('Current Median Home Value', '30-Day Change'),
     index=1,
     horizontal=True)
 
