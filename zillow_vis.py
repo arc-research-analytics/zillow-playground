@@ -21,8 +21,12 @@ st.markdown(
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     section.main > div:has(~ footer ) {
-    padding-bottom: 5px;}
-    div.block-container{padding-top:1.5rem;}
+        padding-bottom: 5px;}
+    div.block-container{
+        padding-top:1.5rem;
+        padding-left:1.5rem;
+        padding-right:1.5rem;
+        }
     div.stActionButton{visibility: hidden;}
 </style>
 """,
