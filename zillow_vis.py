@@ -4,6 +4,10 @@ import pydeck as pdk
 import plotly.express as px
 import geopandas as gpd
 from PIL import Image
+import os
+
+os.environ['CACHE_ON_STARTUP'] = 'True'
+
 
 # hide sidebar
 st.set_page_config(
