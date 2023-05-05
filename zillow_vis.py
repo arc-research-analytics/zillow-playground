@@ -326,13 +326,13 @@ def superDistrict_charter():
 col1, col2 = st.columns([1,1])
 
 # create dropdown for summary level
-geography = col1.selectbox(
+geography = col1.radio(
     'Select geography to summarize:',
     ('Super District', 'County'),
     index=0
 )
 
-variable = col2.selectbox(
+variable = col2.radio(
     'Select variable:',
     ('Current Median Home Value', '30-Day Change'),
     index=1)
