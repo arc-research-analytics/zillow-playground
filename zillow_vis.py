@@ -200,17 +200,15 @@ def county_mapper():
 
 col1, col2 = st.columns([1,1])
 # create dropdown for summary level
-geography = col1.radio(
+geography = col1.selectbox(
     'Select geography to summarize:',
     ('Super District', 'County'),
-    index=0,
-    horizontal=True)
+    index=0)
 
-variable = col2.radio(
+variable = col2.selectbox(
     'Select variable:',
     ('Current Median Home Value', '30-Day Change'),
-    index=1,
-    horizontal=True)
+    index=1)
 
 
 # show map
