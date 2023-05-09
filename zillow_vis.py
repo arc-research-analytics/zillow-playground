@@ -45,9 +45,6 @@ st.markdown(
 )
 
 
-
-
-
 # define color ramp
 color_labels = [
         (254, 217, 118), # light yellow
@@ -139,7 +136,7 @@ def superDistrict_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "<b style='display:block; text-align:center;'>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "html": "<b style='display:block; text-align:center;'>{NAME}</b>{tooltip_label}<b>{tooltip_value}</b>",
             "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
