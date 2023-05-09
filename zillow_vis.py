@@ -48,6 +48,18 @@ color_labels = [
         (177, 0, 38) # dark red
     ]
 
+# color_labels_CT = [
+#     (255, 255, 204),
+#     (255, 237, 160),
+#     (254, 217, 118),
+#     (254, 178, 76),
+#     (253, 141, 60),
+#     (252, 78, 42),
+#     (227, 26, 28),
+#     (189, 0, 38),
+#     (128, 0, 38)
+# ]
+
 # define map starting point
 latitude = 33.836717766945384
 longitude = -84.37286813567411
@@ -58,28 +70,36 @@ height = 525
 @st.cache_data
 def data_loader():
 
-    # super districts first
+    # census tracts first
+    df_tract = pd.read_csv('CT_final2.csv')
+
+    df_tract['Census_tract'] = df_tract['Census_tract'].astype(str)
+
+    url1 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/21/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID&outSR=4326&f=json"
+
+    gdf_tract = gpd.read_file(url1)
+
+    gdf_CT = gdf_tract.merge(df_tract, left_on='GEOID', right_on='Census_tract')
+
+    # super districts next
     df_SD = pd.read_csv('superDistrict_final2.csv')
 
-    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=NAME,GEOID&outSR=4326&f=json"
+    url2 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=&outSR=4326&f=json"
 
-    gdf_SD = gpd.read_file(url)
+    gdf_SD = gpd.read_file(url2)
 
     gdf_SD = gdf_SD.merge(df_SD, left_on='NAME', right_on='Super_district')
 
-
-
-    # counties next
+    # counties last
     df_county = pd.read_csv('county_final2.csv')
 
-    url = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
+    url3 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
 
-    gdf_county = gpd.read_file(url)
+    gdf_county = gpd.read_file(url3)
 
     gdf_county = gdf_county.merge(df_county, left_on='NAME', right_on='County')
 
-    return gdf_SD, gdf_county
-
+    return gdf_SD, gdf_county, gdf_CT
 
 # define mapping function for super districts first
 def superDistrict_mapper():
@@ -247,8 +267,88 @@ def county_mapper():
 
     return r
 
-# define function for drawing bar chart
-def superDistrict_charter():
+def CT_mapper():
+
+    gdf = data_loader()[2]
+
+    # do county outline
+    county_outline = data_loader()[1]
+
+    
+    gdf['zestimate_formatted'] = gdf['zestimate_median'].apply(lambda x: "${:,.0f}".format((x)))
+    gdf['change_formatted'] = gdf['change_median'].apply(lambda x: "{:.1f}%".format((x)))
+
+    tooltip_value = {
+        'Current Median Home Value':gdf['zestimate_formatted'],
+        '30-Day Change':gdf['change_formatted'] ,
+        }
+    
+
+    gdf['tooltip_value'] = tooltip_value[variable]
+
+    gdf['choro_color'] = pd.cut(
+            gdf['change_median'],
+            bins=len(color_labels_CT),
+            labels=color_labels_CT,
+            include_lowest=True,
+            duplicates='drop'
+            )
+
+    initial_view_state = pdk.ViewState(
+        latitude=latitude, 
+        longitude=longitude, 
+        zoom=zoom, 
+        max_zoom=12, 
+        min_zoom=8,
+        pitch=0,
+        bearing=0,
+        height=height
+    )
+
+    geojson = pdk.Layer(
+        "GeoJsonLayer",
+        gdf,
+        pickable=True,
+        autoHighlight=True,
+        highlight_color = [128, 128, 128, 70],
+        opacity=0.5,
+        stroked=True,
+        filled=True,
+        get_fill_color='choro_color',
+        get_line_color=[128, 128, 128],
+        line_width_min_pixels=1
+    )
+
+    # define tooltip
+    tooltip = {
+            "html": "Median 30-Day Zestimate Change: <b>{tooltip_value}</b>",
+            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
+            }
+
+    geojson2 = pdk.Layer(
+        "GeoJsonLayer",
+        county_outline,
+        pickable=False,
+        autoHighlight=False,
+        opacity=.7,
+        stroked=True,
+        filled=False,
+        get_line_color=[0, 0, 0],
+        line_width_min_pixels=3
+    )
+
+    r = pdk.Deck(
+        layers=[geojson, geojson2],
+        initial_view_state=initial_view_state,
+        map_provider='mapbox',
+        map_style='light',
+        tooltip=tooltip
+        )
+
+    return r
+
+# # define function for drawing bar chart
+# def superDistrict_charter():
 
     gdf = data_loader()[0]
 
@@ -324,31 +424,26 @@ def superDistrict_charter():
 
 
 
-col1, col2 = st.columns([1,1])
+col1, col2, col3 = st.columns([1,1,1])
 
 # create dropdown for summary level
-geography = col1.radio(
+geography = col2.radio(
     'Select geography to summarize:',
-    ('Super District', 'County'),
-    index=0
+    ('County', 'Super District'),
+    index=0,
+    horizontal=True
 )
 
-variable = col2.radio(
-    'Select variable:',
-    ('Current Median Home Value', '30-Day Change'),
-    index=1)
-
-
-
+variable = '30-Day Change'
 
 
 # show map
 if geography == 'Super District':
-
     st.pydeck_chart(superDistrict_mapper(), use_container_width=True)
-    # col2.plotly_chart(superDistrict_charter(), use_container_width=True)
-else:
+elif geography == 'County':
     st.pydeck_chart(county_mapper(), use_container_width=True)
+else:
+    st.pydeck_chart(CT_mapper(), use_container_width=True)
 
 st.markdown("***Data provided via the Zestimate API and Zestimate® home valuation from 5/1/23 to 5/4/23.***")
 # st.write("Data collected from May 1, 2023 to May 4, 2024.")
