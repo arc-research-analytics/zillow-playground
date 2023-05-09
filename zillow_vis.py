@@ -23,7 +23,8 @@ st.markdown(
     }
     .reportview-container .main footer {visibility: hidden;}    
     #MainMenu, footer {visibility: hidden;}
-    
+    section.main > div:has(~ footer ) {
+        padding-bottom: 1px;}
     div.block-container{
         padding-top:1.5rem;
         padding-left:1.5rem;
@@ -43,8 +44,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# section.main > div:has(~ footer ) {
-#         padding-bottom: 5px;}
+
 
 
 
