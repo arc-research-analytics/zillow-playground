@@ -31,13 +31,20 @@ st.markdown(
         padding-right:1.5rem;
         }
     div.stActionButton{visibility: hidden;}
-    div.st-b3 st-bd st-be st-bf st-bg st-bh > div{
-        flex-direction:row;
-        text-align: center;}
+    div.stRadio > label{
+        display: flex;
+        justify-content: center;
+    }
+    div.stRadio > div{
+        display: flex;
+        justify-content: center;
+    }
 </style>
 """,
     unsafe_allow_html=True,
 )
+
+
 
 
 
