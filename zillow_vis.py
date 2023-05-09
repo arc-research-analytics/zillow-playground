@@ -108,7 +108,7 @@ def data_loader():
 
     gdf_county = gdf_county.merge(df_county, left_on='NAME', right_on='County')
 
-    return gdf_SD, gdf_county, gdf_CT
+    return gdf_SD, gdf_county
 
 # define mapping function for super districts first
 def superDistrict_mapper():
