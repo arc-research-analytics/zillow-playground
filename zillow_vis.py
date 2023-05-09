@@ -239,7 +239,7 @@ def county_mapper():
         layers=geojson,
         initial_view_state=initial_view_state,
         map_provider='mapbox',
-        map_style='light',
+        map_style='dark',
         tooltip=tooltip
         )
 
