@@ -75,20 +75,20 @@ longitude = -84.37286813567411
 zoom = 7.2
 height = 525
 
-# data loadewr
+# data loader
 @st.cache_data
 def data_loader():
 
-    # census tracts first
-    df_tract = pd.read_csv('CT_final2.csv')
+    # # census tracts first
+    # df_tract = pd.read_csv('CT_final2.csv')
 
-    df_tract['Census_tract'] = df_tract['Census_tract'].astype(str)
+    # df_tract['Census_tract'] = df_tract['Census_tract'].astype(str)
 
-    url1 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/21/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID&outSR=4326&f=json"
+    # url1 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/21/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID&outSR=4326&f=json"
 
-    gdf_tract = gpd.read_file(url1)
+    # gdf_tract = gpd.read_file(url1)
 
-    gdf_CT = gdf_tract.merge(df_tract, left_on='GEOID', right_on='Census_tract')
+    # gdf_CT = gdf_tract.merge(df_tract, left_on='GEOID', right_on='Census_tract')
 
     # super districts next
     df_SD = pd.read_csv('superDistrict_final2.csv')
