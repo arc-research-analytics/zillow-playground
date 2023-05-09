@@ -141,7 +141,7 @@ def superDistrict_mapper():
     # define tooltip
     tooltip = {
             "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b><br>Total addresses sampled: {Value_count}",
-            "style": {"background": "rgba(100,100,100,0.9)", "display":"block", "text-align":"center", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
+            "style": {"background": "rgba(100,100,100,0.9)", "display":"block", "text-align":"center", "color": "white", "font-family": "Helvetica", "font-size":"15px", "border":"1px solid white"},
             }
 
     geojson2 = pdk.Layer(
@@ -160,7 +160,7 @@ def superDistrict_mapper():
         layers=[geojson, geojson2],
         initial_view_state=initial_view_state,
         map_provider='mapbox',
-        map_style='light',
+        map_style='dark',
         tooltip=tooltip
         )
 
@@ -232,7 +232,7 @@ def county_mapper():
     # define tooltip
     tooltip = {
             "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b><br>Total addresses sampled: {Value_count}",
-            "style": {"background": "rgba(100,100,100,0.9)", "display":"block", "text-align":"center", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
+            "style": {"background": "rgba(100,100,100,0.9)", "display":"block", "text-align":"center", "color": "white", "font-family": "Helvetica", "font-size":"15px", "border":"1px solid white"},
             }
 
     r = pdk.Deck(
