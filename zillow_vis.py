@@ -101,6 +101,10 @@ def superDistrict_mapper():
     gdf['tooltip_label'] = tooltip_label[variable]
     gdf['tooltip_value'] = tooltip_value[variable]
 
+    # thousands separator
+    format_with_separator = lambda x: '{:,}'.format(x)
+    gdf['Value_count'] = gdf['Value_count'].apply(format_with_separator)
+
     gdf['choro_color'] = pd.cut(
             var_dict[variable],
             bins=len(color_labels),
@@ -136,8 +140,8 @@ def superDistrict_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "<b style='display:block; text-align:center;'>{NAME}</b>{tooltip_label}<b>{tooltip_value}</b>",
-            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
+            "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b><br>Total addresses sampled: {Value_count}",
+            "style": {"background": "rgba(100,100,100,0.9)", "display":"block", "text-align":"center", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
     geojson2 = pdk.Layer(
@@ -188,6 +192,10 @@ def county_mapper():
     gdf['tooltip_label'] = tooltip_label[variable]
     gdf['tooltip_value'] = tooltip_value[variable]
 
+    # thousands separator
+    format_with_separator = lambda x: '{:,}'.format(x)
+    gdf['Value_count'] = gdf['Value_count'].apply(format_with_separator)
+
     gdf['choro_color'] = pd.cut(
             var_dict[variable],
             bins=len(color_labels),
@@ -223,8 +231,8 @@ def county_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "<b style='display:block; text-align:center;'>{NAME}</b>{tooltip_label}<b>{tooltip_value}</b>",
-            "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
+            "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b><br>Total addresses sampled: {Value_count}",
+            "style": {"background": "rgba(100,100,100,0.9)", "display":"block", "text-align":"center", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
     r = pdk.Deck(
