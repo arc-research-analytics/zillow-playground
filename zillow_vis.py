@@ -23,8 +23,7 @@ st.markdown(
     }
     .reportview-container .main footer {visibility: hidden;}    
     #MainMenu, footer {visibility: hidden;}
-    section.main > div:has(~ footer ) {
-        padding-bottom: 5px;}
+    
     div.block-container{
         padding-top:1.5rem;
         padding-left:1.5rem;
@@ -43,6 +42,9 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+# section.main > div:has(~ footer ) {
+#         padding-bottom: 5px;}
 
 
 
@@ -137,7 +139,7 @@ def superDistrict_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "html": "<b style='display:block; text-align:center;'>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
             "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
@@ -224,7 +226,7 @@ def county_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "html": "<b style='display:block; text-align:center;'>{NAME}</b>{tooltip_label}<b>{tooltip_value}</b>",
             "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
