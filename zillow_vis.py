@@ -66,22 +66,10 @@ height = 525
 def data_loader():
 
     # super districts first
-    df_SD = pd.read_csv('superDistrict_final2.csv')
-
-    url2 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/20/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=&outSR=4326&f=json"
-
-    gdf_SD = gpd.read_file(url2)
-
-    gdf_SD = gdf_SD.merge(df_SD, left_on='NAME', right_on='Super_district')
+    gdf_SD = gpd.read_file('superDistrict_joined.gpkg')
 
     # counties next
-    df_county = pd.read_csv('county_final2.csv')
-
-    url3 = "https://services1.arcgis.com/Ug5xGQbHsD8zuZzM/arcgis/rest/services/ACS_2021_Population/FeatureServer/9/query?where=PlanningRegion%20%3D%20'ATLANTA%20REGIONAL%20COMMISSION'&outFields=GEOID,NAME&outSR=4326&f=json"
-
-    gdf_county = gpd.read_file(url3)
-
-    gdf_county = gdf_county.merge(df_county, left_on='NAME', right_on='County')
+    gdf_county = gpd.read_file('county_joined.gpkg')
 
     return gdf_SD, gdf_county
 
@@ -177,7 +165,6 @@ def superDistrict_mapper():
 
 # define mapping function for counties next
 def county_mapper():
-
 
     gdf = data_loader()[1]
 
