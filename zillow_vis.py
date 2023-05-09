@@ -137,7 +137,7 @@ def superDistrict_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "Super District: <b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
             "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
@@ -224,7 +224,7 @@ def county_mapper():
 
     # define tooltip
     tooltip = {
-            "html": "County: <b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
+            "html": "<b>{NAME}</b><br>{tooltip_label}<b>{tooltip_value}</b>",
             "style": {"background": "rgba(100,100,100,0.9)", "color": "white", "font-family": "Helvetica", "font-size":"15px"},
             }
 
