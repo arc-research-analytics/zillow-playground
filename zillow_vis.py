@@ -27,14 +27,7 @@ st.markdown(
         padding-bottom: 1px;}
 
     div.stActionButton{visibility: hidden;}
-    div.stRadio > label{
-        display: flex;
-        justify-content: center;
-    }
-    div.stRadio > div{
-        display: flex;
-        justify-content: center;
-    }
+
 </style>
 """,
     unsafe_allow_html=True,
