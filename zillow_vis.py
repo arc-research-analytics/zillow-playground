@@ -24,10 +24,18 @@ st.markdown(
     .reportview-container .main footer {visibility: hidden;}    
     #MainMenu, footer {visibility: hidden;}
     section.main > div:has(~ footer ) {
-        padding-bottom: 1px;}
-
+        padding-bottom: 1px;
+        padding-bottom: 1px;
+    }
     div.stActionButton{visibility: hidden;}
-
+    div.stRadio > label{
+        display: flex;
+        justify-content: center;
+    }
+    div.stRadio > div{
+        display: flex;
+        justify-content: center;
+    }
 </style>
 """,
     unsafe_allow_html=True,
@@ -243,7 +251,7 @@ def county_mapper():
 col1, col2, col3 = st.columns([1,1,1])
 
 # create dropdown for summary level
-geography = col2.radio(
+geography = st.radio(
     'Select geography to summarize:',
     ('County', 'Super District'),
     index=0,
