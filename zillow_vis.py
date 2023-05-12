@@ -68,10 +68,13 @@ def data_loader():
 
     return gdf_SD, gdf_county
 
+df1 = data_loader()[0]
+df2 = data_loader()[1]
+
 # define mapping function for super districts first
 def superDistrict_mapper():
 
-    gdf = data_loader()[0]
+    gdf = df1
 
     # do county outline
     county_outline = data_loader()[1]
@@ -167,7 +170,7 @@ def superDistrict_mapper():
 # define mapping function for counties next
 def county_mapper():
 
-    gdf = data_loader()[1]
+    gdf = df2
 
     var_dict = {
         'Current Median Home Value':gdf['zestimate_median'],
