@@ -25,7 +25,7 @@ st.markdown(
     #MainMenu, footer {visibility: hidden;}
     section.main > div:has(~ footer ) {
         padding-bottom: 1px;
-        padding-bottom: 1px;
+        padding-top: 10px;
     }
     div.stActionButton{visibility: hidden;}
     div.stRadio > label{
