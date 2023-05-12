@@ -25,11 +25,7 @@ st.markdown(
     #MainMenu, footer {visibility: hidden;}
     section.main > div:has(~ footer ) {
         padding-bottom: 1px;}
-    div.block-container{
-        padding-top:1.5rem;
-        padding-left:1.5rem;
-        padding-right:1.5rem;
-        }
+
     div.stActionButton{visibility: hidden;}
     div.stRadio > label{
         display: flex;
@@ -134,7 +130,7 @@ def superDistrict_mapper():
         stroked=True,
         filled=True,
         get_fill_color='choro_color',
-        get_line_color=[128, 128, 128],
+        get_line_color=[0, 0, 0],
         line_width_min_pixels=1
     )
 
